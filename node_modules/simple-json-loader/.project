@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>simple-json-loader</name>
+	<comment>This is mini utility for load JSON from FileSystem.</comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+		<nature>org.nodeclipse.ui.NodeNature</nature>
+	</natures>
+</projectDescription>

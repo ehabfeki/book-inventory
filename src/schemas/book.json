@@ -1,0 +1,23 @@
+{
+  "required": [
+    "title","author","copies","pages"
+  ],
+  "properties": {
+    "title": {
+      "$id": "#/properties/name",
+      "type": "string"
+    },
+    "author": {
+      "$id" : "#/properties/author",
+      "type": "string"
+    },
+    "copies" : {
+      "$id" : "#/properties/copies",
+      "type": "number"
+    },
+    "pages" : {
+      "$id" : "#/properties/pages",
+      "type": "number"
+    }
+  }
+}
