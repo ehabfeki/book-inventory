@@ -53,8 +53,7 @@ app.put("/books",(req,res) =>{
 })
 
 app.put('/books/:isbn', (req, res) => {
-
-    // fethc book match by `isbn`
+    // fetch book match by `isbn`
     const found = books.find( (book) => {
         return book.isbn === req.params.isbn;
     });
@@ -81,14 +80,20 @@ app.put('/books/:isbn', (req, res) => {
         books.splice(targetIndex, 1, updated);
 
         // return with status 204
-        // success status response code 204 indicates
-        // that the request has succeeded
-        res.sendStatus(204);
+        res.status(204);
+        res.send(found.isbn + " is updated!")
     }
     else {
-        res.sendStatus(404);
+        res.status(404);
+        res.send("owpzy daisy! something bad happend!")
     }
 });
+
+app.delete('/books/:isbn', (req, res) => {
+    const isbn = req.params.isbn;
+    books = books.filter(book => book.isbn !== isbn)
+    res.send("successfully deleted book with isbn code " + isbn);
+})
 
 app.use(jsonBodyParser);
 
