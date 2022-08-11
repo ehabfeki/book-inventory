@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 let books: Book[] = require('../data/books.json').books;
 const bookSchema = require('../src/schemas/book.json')
 import ajv from "ajv";
+import { error } from 'console';
 
 const app = express();
 const port = 8080; // default port to listen
@@ -50,6 +51,44 @@ app.put("/books",(req,res) =>{
     }
 
 })
+
+app.put('/books/:isbn', (req, res) => {
+
+    // fethc book match by `isbn`
+    const found = books.find( (book) => {
+        return book.isbn === req.params.isbn;
+    });
+
+    // check if book found
+    if (found) {
+        const updated = {
+            isbn: found.isbn,
+            title: req.body.title,
+            copies: req.body.copies,
+            subtitle: req.body.subtitle,
+            author: req.body.author,
+            published: req.body.published,
+            publisher: req.body.publisher,
+            pages: req.body.pages,
+            description: req.body.description,
+            website: req.body.website,
+        };
+
+        // find index of found object from array of data
+        const targetIndex = books.indexOf(found);
+
+        // replace object from data list with `updated` object
+        books.splice(targetIndex, 1, updated);
+
+        // return with status 204
+        // success status response code 204 indicates
+        // that the request has succeeded
+        res.sendStatus(204);
+    }
+    else {
+        res.sendStatus(404);
+    }
+});
 
 app.use(jsonBodyParser);
 
