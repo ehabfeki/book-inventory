@@ -34,6 +34,10 @@ let putPayload: Book = {
 describe('Endpoints', () => {
   afterEach((done) => {
     // port can be ENV_VAR
+
+    // jest is waiting for 8080 to be closed
+    // need to find elegant solution instead
+    // of killing the port
     kill(8080, 'tcp');
     done();
   });
