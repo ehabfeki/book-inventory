@@ -1,4 +1,4 @@
-import app from '../src/index';
+import {server, app} from '../src/index';
 import request from 'supertest';
 import { getBooks } from './__mocks__/books';
 import { Book } from '../src/Book';
@@ -38,7 +38,8 @@ describe('Endpoints', () => {
     // jest is waiting for 8080 to be closed
     // need to find elegant solution instead
     // of killing the port
-    kill(8080, 'tcp');
+    // kill(8080, 'tcp');
+    server.close( () => { console.log('Bye :('); });
     done();
   });
 

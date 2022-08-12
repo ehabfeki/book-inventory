@@ -140,8 +140,8 @@ app.get('/search', (req, res) => {
 app.use(jsonBodyParser);
 
 // start the Express server
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`server started at http://localhost:${port}`);
 });
 
-export default app;
+export {server, app};
