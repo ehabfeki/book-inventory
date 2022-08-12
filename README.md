@@ -1,94 +1,78 @@
-<H1>
-       Books Inventory API Test.
-</H1>
-<body>
-<P>
-The Following interface is used managing book inventory .
+This is a simple express app to CRUD on books
 
-Currently implemented solutioins are:
+#### Endpoints:
 
-1. Get : "http://localhost:8080/books" 
-   This will return list of books that are available in the inventory .
-2. Put : "http://localhost:8080/books"
-   will add book\books to inventory 
- </P>
+GET /                 - Landing page
+GET /books            - Get all books
+POST /books           - Add a new book
+DELETE /books/:isbn   - Delete a book
+PATCH /books/:isbn    - Update a book
+GET /search           - Filter by attributes
 
-<p>
-    <h2>Setup</h2>
-    <p>
-        &nbsp;
-        1. You need node js and npm application to be install<Br> &nbsp;
-        2. Run npm i from the root folder<Br> &nbsp;
-        3. Run npm start<Br> &nbsp;
-    </p>
-    <H3>
-        Requirements 
-    </H3>
-    1. You are asked to implement the following functions :
-        <br>&nbsp;&nbsp;&nbsp;
-        a. Update - update existing book.  <br>&nbsp;&nbsp;&nbsp;
-        b. Delete - remove existing. <br>&nbsp;&nbsp;&nbsp;
-        c. Filter - get list of books that match given object filter.<br>
-    2. Provide 6 test cases for this application . <br>
-    3. Automate 4 of the cases you suggested in 2 .<br>
-    4 (BONUS) . Suggest code improvements.
-        
-</body>
+#### Examples:
 
-<!-- 
-QA Automation infrastructure tech assignment
-Implement a program according to the specifications mentioned in the problem statement below.
-The program should be implemented using Javascript / Typescript.
-The solution must include the source code  and/or  build scripts, if required.
+POST /books
+```
+curl -X POST -H "Content-Type: application/json"  \
+-d '{
+     "isbn": "1",            
+     "copies": 100,
+     "title": "this is title for new book",                  
+     "subtitle": "this is subtitle for new book",                
+     "author": "this is author for new book",  
+     "published": "2014-12-14T00:00:00.000Z",
+     "publisher": "this is publisher for new book",  
+     "pages": 1234,
+     "description": "this is description for new book",                                                                                                                                                                    
+     "website": "http://eloquentjavascript.net/route/here/for/updated/website"
+   }' \
+"http://localhost:8080/books/"
+```
 
+PATCH /books/:isbn
+```
+curl -X PATCH -H "Content-Type: application/json"  \
+-d '{
+     "isbn": "9781491904244",
+     "copies": 100,
+     "title": "this is updated title",                 
+     "subtitle": "this is updated subtitle",               
+     "author": "this is updated author", 
+     "published": "2014-12-14T00:00:00.000Z",
+     "publisher": "this is updated publisher", 
+     "pages": 1234,
+     "description": "this is updated description",                                                                                                                                                                   
+     "website": "http://eloquentjavascript.net/route/here/for/updated/website" 
+   }' \
+"http://localhost:8080/books/9781491904244"
+```
 
-As a QA infrastructure automation engineer you will be responsible of a various tasks in the QA automation development life cycle, as: 
-SW development (tests and tools)
-Infrastructure management (CI\CD , Docker , k8s etc …)
-Testing
-Test Automation
-In the assignment below we will cover all of these responsibilities:
+DELETE /books/:isbn
+```
+curl -X DELETE http://localhost:8080/books/9781491904244
+     -H "Accept: application/json"
+```
 
+GET /search
+```
+curl -d '{"key1":"value1", "key2":"value2"}' -H "ContentType: application/json" -X GET "http://localhost:8080/search?isbn=9781449331818"
+```
+```
+curl -d '{"key1":"value1", "key2":"value2"}' -H "ContentType: application/json" -X GET "http://localhost:8080/search?author=Eric%20Elliott&publisher=O%27Reilly%20Media"
+```
 
-Introduction
-This code simulates an API layer for book inventory management application. 
-The application should allow its users to add, update, delete and view books from the inventory. Only a part of the functionality is exposed, note that expected data is in JSON format.
-Setup:
-You will be provided with ZIP file you need to extract
-You need to have node && npm installed
-Run npm install
-In order to run the application you should run npm start
+#### Build:
 
-Development :
+```yarn install```
 
-The following endpoints are exposed 
-http://localhost:8080/ welcome to the application
-http://localhost:8080/books get the current list of books in the repository
-http://localhost:8080/books put request will allow you to add a book or array of books to the repository.
+```yarn start```
 
-You are asked to implement the following capabilities:
-Update - update existing book (one or more properties)
-Delete - remove existing
-Filter - get a list of books that match the given object filter.ex : {title : “test bool “}
+or with Docker
 
+```docker build -t book-inventory .```
 
-QA:
- The task :      Please provide 6 test cases for testing your solution       (at least 1 TC for each endpoint)
+```docker run -d -p 8080:8080 book-inventory```
 
+#### Test
 
- Automation:
-The Task :     You are asked to automate 1 of the cases you suggested in the QA task.
-
-
-Infrastructure:
- The task:
-Wrap your solution with Docker container 
-Add launch instruction so all capabilities from the previous solution will be exposed
-
-
-Delivery 
-We would prefer your code to be checked in on any source code management system (Github,Bitbucket, etc). Please do not use the name ContentSquare inside your project as it is a registered trademark.
-
-
-
-Thank you and good luck. -->
+```yarn test```
