@@ -95,6 +95,24 @@ app.delete('/books/:isbn', (req, res) => {
     res.send("successfully deleted book with isbn code " + isbn);
 })
 
+app.get('/search', (req, res) => {
+    const filters = req.query;
+
+    const filteredBooks = books.filter(book => {
+
+      let isValid = true;
+      for (const key in filters) {
+          if(filters.hasOwnProperty(key)){
+              isValid = isValid && book[key as keyof typeof book] === filters[key];
+          }
+      }
+      
+      return isValid;
+    });
+
+    res.send(filteredBooks);
+})
+
 app.use(jsonBodyParser);
 
 // start the Express server
