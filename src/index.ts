@@ -132,7 +132,7 @@ app.get('/search', (req, res) => {
       }
     }
     return isValid;
-});
+  });
 
   res.send(filteredBooks);
 });
