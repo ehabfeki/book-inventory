@@ -60,38 +60,54 @@ app.post('/books', (req, res) => {
 });
 
 app.put('/books/:isbn', (req, res) => {
-  // fetch book match by `isbn`
-  const found = books.find((book) => {
-    return book.isbn === req.params.isbn;
-  });
+  const book: Book = req.body;
+  const isValid: boolean = avjValidator.validate(bookSchema, book);
 
-  // check if book found
-  if (found) {
-    const updated = {
-      isbn: found.isbn,
-      title: req.body.title,
-      copies: req.body.copies,
-      subtitle: req.body.subtitle,
-      author: req.body.author,
-      published: req.body.published,
-      publisher: req.body.publisher,
-      pages: req.body.pages,
-      description: req.body.description,
-      website: req.body.website
-    };
+  if (isValid) {
+    // fetch book match by `isbn`
+    const found = books.find((b) => {
+      return b.isbn === req.params.isbn;
+    });
 
-    // find index of found object from array of data
-    const targetIndex = books.indexOf(found);
+    // check if book found
+    if (found) {
+      const updated = {
+        isbn: found.isbn,
+        title: req.body.title,
+        copies: req.body.copies,
+        subtitle: req.body.subtitle,
+        author: req.body.author,
+        published: req.body.published,
+        publisher: req.body.publisher,
+        pages: req.body.pages,
+        description: req.body.description,
+        website: req.body.website
+      };
 
-    // replace object from data list with `updated` object
-    books.splice(targetIndex, 1, updated);
+      // find index of found object from array of data
+      const targetIndex = books.indexOf(found);
 
-    // return with status 204
-    res.status(204);
-    res.send(found.isbn + ' is updated!');
+      // replace object from data list with `updated` object
+      books.splice(targetIndex, 1, updated);
+
+      // return with status 204
+      res.status(204);
+      res.send(found.isbn + ' is updated!');
+    } else {
+      res.status(404);
+      res.send(
+        'owpzy daisy! this book doesnt exist in our awesome book inventory!'
+      );
+    }
   } else {
-    res.status(404);
-    res.send('owpzy daisy! something bad happend!');
+    res.status(500);
+    console.log(avjValidator.errors[0].message);
+    res.send(
+      (book.title
+        ? `${book.title} is not valid book `
+        : ' book object is not well formated => ') +
+        avjValidator.errors[0].message
+    );
   }
 });
 
