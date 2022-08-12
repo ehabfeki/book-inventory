@@ -9,7 +9,7 @@
     "prestart": "npm run build",
     "start": "node .",
     "test": "jest --coverage",
-    "fmt": "prettier --config .prettierrc 'src/**/*.ts' --write"
+    "fmt": "prettier --config .prettierrc './**/*.ts' --write"
   },
   "jest": {
     "moduleFileExtensions": [
