@@ -39,7 +39,7 @@ describe('Endpoints', () => {
     // need to find elegant solution instead
     // of killing the port
     // kill(8080, 'tcp');
-    server.close( () => { console.log('Bye :('); });
+    server.close();
     done();
   });
 
