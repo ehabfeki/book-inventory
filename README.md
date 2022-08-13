@@ -7,7 +7,7 @@ GET /books            - Get all books\
 POST /books           - Add a new book\
 DELETE /books/:isbn   - Delete a book\
 PATCH /books/:isbn    - Update a book\
-GET /search           - Filter by attributes\
+GET /search           - Filter by attributes
 
 #### Examples:
 
